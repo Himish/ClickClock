@@ -5,11 +5,10 @@
 // @author          Himish
 // @author          Kalabunga
 // @author          Bazgrim
-// @homepage        https://github.com/Himish/ClickClock
 // @updateURL       https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
 // @supportURL      https://github.com/Himish/ClickClock/issues
 // @require         https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @resource  css   https://raw.githubusercontent.com/Himish/ClickClock/master/style.css
+// @resource  css   http://denizongar.com/oclick/style.css
 // @include         http://*.barafranca.com/*
 // @include         https://*.barafranca.com/*
 // @include         http://barafranca.com/*
@@ -90,31 +89,23 @@ if (document.getElementById('game_container') !== null) {
     
     if (mutationObserver) {
         var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.addedNodes.length) {
-                    categorizeClick();
-                }
-            });
+                    var notMulti = true;
+                    mutations.forEach(function(mutation) {                       
+                                notMulti = checkMutation(mutation);                        
+                    });
+
+        //            
+        if (notMulti && !onPage("Mail"))            
+              categorizeClick();                      
+                               
         });
         observer.observe(document.getElementById('game_container'), {
             attributes: false,
             childList: true,
             characterData: false
         });
-    } 
-
-    else{
-
-        document.getElementById('game_container').addEventListener('DOMNodeInserted', function(event) {
-            if (event.target.nodeType != 1) {
-                return false;
-            }
-            categorizeClick();
-            }, true
-        );
-    }   
+    }     
 }
-
 
 function categorizeClick(){
 
@@ -188,4 +179,16 @@ function updateBar(){
     var pWidth = (perc > 100?100:perc) + "%";
 
     $('#clicklimit div[data-perc]').find('div').animate({width: pWidth }, DELAY);
+}
+
+
+function onPage(page){
+    return window.location.hash.indexOf(page) != -1
+}
+
+//returns true if mutation happened just once on a page.
+function checkMutation(mutation){
+    for (var i = 0; i<mutation.addedNodes.length; i++)
+          if (mutation.addedNodes[i].id == "AF") return false;
+    return true;  
 }
