@@ -1,39 +1,42 @@
 // ==UserScript==
-// @name ClickClock
-// @version 1.0.0
-// @description Know your limits!
-// @author Kalabunga
-// @author Bazgrim
-// @require https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @resource css http://denizongar.com/oclick/style.css
-// @include http://*.barafranca.com/*
-// @include https://*.barafranca.com/*
-// @include http://barafranca.com/*
-// @include https://barafranca.com/*
-// @include http://*.barafranca.nl/*
-// @include https://*.barafranca.nl/*
-// @include http://barafranca.nl/*
-// @include https://barafranca.nl/*
-// @include http://*.barafranca.us/*
-// @include https://*.barafranca.us/*
-// @include http://barafranca.us/*
-// @include https://barafranca.us/*
-// @include http://*.barafranca.gen.tr/*
-// @include https://*.barafranca.gen.tr/*
-// @include http://barafranca.gen.tr/*
-// @include https://barafranca.gen.tr/*
-// @include http://*.omerta.dm/*
-// @include https://*.omerta.dm/*
-// @include http://omerta.dm/*
-// @include https://omerta.dm/*
-// @exclude http://*/game-register.php*
-// @exclude https://*/game-register.php*
-// @grant GM_getResourceText
-// @grant GM_getResourceURL
-// @grant GM_addStyle
-// @grant GM_getValue
-// @grant GM_setValue
-// @priority 1
+// @name            ClickClock
+// @version         1.0.0
+// @description     Know your limits!
+// @author          Himish
+// @author          Kalabunga
+// @author          Bazgrim
+// @updateURL       https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
+// @supportURL      https://github.com/Himish/ClickClock/issues
+// @require         https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+// @resource  css   http://denizongar.com/oclick/style.css
+// @include         http://*.barafranca.com/*
+// @include         https://*.barafranca.com/*
+// @include         http://barafranca.com/*
+// @include         https://barafranca.com/*
+// @include         http://*.barafranca.nl/*
+// @include         https://*.barafranca.nl/*
+// @include         http://barafranca.nl/*
+// @include         https://barafranca.nl/*
+// @include         http://*.barafranca.us/*
+// @include         https://*.barafranca.us/*
+// @include         http://barafranca.us/*
+// @include         https://barafranca.us/*
+// @include         http://*.barafranca.gen.tr/*
+// @include         https://*.barafranca.gen.tr/*
+// @include         http://barafranca.gen.tr/*
+// @include         https://barafranca.gen.tr/*
+// @include         http://*.omerta.dm/*
+// @include         https://*.omerta.dm/*
+// @include         http://omerta.dm/*
+// @include         https://omerta.dm/*
+// @exclude         http://*/game-register.php*
+// @exclude         https://*/game-register.php*
+// @grant           GM_getResourceText
+// @grant           GM_getResourceURL
+// @grant           GM_addStyle
+// @grant           GM_getValue
+// @grant           GM_setValue
+// @priority        1
 // ==/UserScript==
 
 var CLICK_LIMIT = 40;
