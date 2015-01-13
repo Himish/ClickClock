@@ -5,6 +5,7 @@
 // @author          Himish
 // @author          Kalabunga
 // @author          Bazgrim
+// @homepage        https://github.com/Himish/ClickClock
 // @updateURL       https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
 // @supportURL      https://github.com/Himish/ClickClock/issues
 // @require         https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
