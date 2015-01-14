@@ -10,9 +10,10 @@
 	position: absolute;
 	float: right;
 	right: 6px;
+	z-index: 11;
 	margin: 0;
 	color: #fff;
-	z-index: 11;
+	font-weight: 600;
 }
 #status div:nth-child(3) {
 	display: none !important;
