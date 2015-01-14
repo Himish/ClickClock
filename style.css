@@ -15,6 +15,6 @@
 	color: #fff;
 	font-weight: 600;
 }
-#status div:nth-child(3) {
+#status>div:nth-child(3) {
 	display: none !important;
 }
