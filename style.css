@@ -10,6 +10,7 @@
 	position: absolute;
 	float: right;
 	right: 6px;
+	margin: 0;
 	color: #fff;
 	z-index: 11;
 }
