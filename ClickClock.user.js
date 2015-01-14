@@ -6,7 +6,7 @@
 // @author          Kalabunga
 // @author          Bazgrim
 // @homepage        https://github.com/Himish/ClickClock
-// @downloadURL     https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
+// @updateURL       https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
 // @supportURL      https://github.com/Himish/ClickClock/issues
 // @require         https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @resource  css   https://raw.githubusercontent.com/Himish/ClickClock/master/style.css
@@ -38,8 +38,8 @@ var county = null; //Variable for interval
 GM_addStyle(GM_getResourceText('css'));
 
 //Adds bar to page
-$("#status").append("<div id='clicklimit'><div class='progressbar-label'>Click Limit: <div id='clickCounter'>1</div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'></div></div></div>");
-$('#secLeft').text($('#secLeft').attr('data-sec-left'));
+$("#status").append(" <div id='clickCounter'>1</div><div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'></div></div></div>");
+$('#clickLimit').text(CLICK_LIMIT);
 $("#clicklimit").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
 
 //Start click time counter
@@ -192,4 +192,5 @@ function checkMutation(mutation){
 function updateClickLimit(){
     GM_setValue('click_limit',$('#game_container > table > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)').html().indexOf('Donating') == -1? 11 : 40);
     CLICK_LIMIT = GM_getValue('click_limit',11);
+    $('#clickLimit').text(CLICK_LIMIT);
 }
