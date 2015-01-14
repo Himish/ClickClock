@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.2.5
+// @version         1.2.4
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -195,10 +195,11 @@ function updateClickLimit(){
 //returns true if it is counted as click
 function doesItCount(){
     if(!onPage("Mail")) 
-        if(!onPage("Statistics")) 
-            if($('#game_container').text().indexOf('OmertaBeyond Preferences') == -1) 
-                if($('#game_container').text().indexOf('You bought yourself out for') == -1)
-                    return true;
+        if(!onPage("Statistics"))
+            if(!onPage("allusers"))
+                if($('#game_container').text().indexOf('OmertaBeyond Preferences') == -1) 
+                    if($('#game_container').text().indexOf('You bought yourself out for') == -1)
+                        return true;
 
     return false;
 }
