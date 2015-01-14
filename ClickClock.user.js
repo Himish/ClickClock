@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.0.0
+// @version         1.1
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -14,22 +14,6 @@
 // @include         https://*.barafranca.com/*
 // @include         http://barafranca.com/*
 // @include         https://barafranca.com/*
-// @include         http://*.barafranca.nl/*
-// @include         https://*.barafranca.nl/*
-// @include         http://barafranca.nl/*
-// @include         https://barafranca.nl/*
-// @include         http://*.barafranca.us/*
-// @include         https://*.barafranca.us/*
-// @include         http://barafranca.us/*
-// @include         https://barafranca.us/*
-// @include         http://*.barafranca.gen.tr/*
-// @include         https://*.barafranca.gen.tr/*
-// @include         http://barafranca.gen.tr/*
-// @include         https://barafranca.gen.tr/*
-// @include         http://*.omerta.dm/*
-// @include         https://*.omerta.dm/*
-// @include         http://omerta.dm/*
-// @include         https://omerta.dm/*
 // @exclude         http://*/game-register.php*
 // @exclude         https://*/game-register.php*
 // @grant           GM_getResourceText
@@ -40,18 +24,23 @@
 // @priority        1
 // ==/UserScript==
 
-var CLICK_LIMIT = 40;
-var DELAY = 500; //Timer update delay
+
+GM_setValue('click_limit',GM_getValue('clicklimit',11));
+var CLICK_LIMIT = GM_getValue('click_limit',11);
+
+var DELAY = 1000; //Timer update delay
 
 //Initializing click timer
 GM_setValue("count", Math.floor(parseInt(new Date().getTime(), 10) / 1000) - GM_getValue("clicktime")<=60 ? Math.floor(parseInt(new Date().getTime(), 10) / 1000) - GM_getValue("clicktime") : 60);
 
-var county = null;
+var county = null; //Variable for interval
 
 GM_addStyle(GM_getResourceText('css'));
 
 //Adds bar to page
-$("#status").append("<div id='clicklimit'><div class='progressbar-label'>Click Limit: <div id='clickCounter'>1</div></div><div class='progressbar' data-pbar='click' data-perc='100'><div></div></div></div>");
+$("#status").append("<div id='clicklimit'><div class='progressbar-label'>Click Limit: <div id='clickCounter'>1</div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'></div></div></div>");
+$('#secLeft').text($('#secLeft').attr('data-sec-left'));
+$("#clicklimit").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
 
 //Start click time counter
 function finalCountdown(){
@@ -72,6 +61,7 @@ function timeytimey(timeLeft){
 
         clearInterval(county);
         $('#clicklimit div[data-perc]').attr('data-perc', 100);
+        $('#secLeft').attr('data-sec-left', 60);
         updateBar();
         GM_setValue("count",60);
         $("#clickCounter").html(0);
@@ -79,6 +69,7 @@ function timeytimey(timeLeft){
     }
     else{
         $('#clicklimit div[data-perc]').attr('data-perc',timeLeft/60*100);
+        $('#secLeft').attr('data-sec-left', timeLeft);
         updateBar();
     }
 }
@@ -90,15 +81,18 @@ if (document.getElementById('game_container') !== null) {
     
     if (mutationObserver) {
         var observer = new MutationObserver(function(mutations) {
-                    var notMulti = true;
-                    mutations.forEach(function(mutation) {                       
-                                notMulti = checkMutation(mutation);                        
-                    });
+            var notMulti = true;
 
-        //            
-        if (notMulti && !onPage("Mail"))            
-              categorizeClick();                      
-                               
+            mutations.forEach(function(mutation) {                       
+                notMulti = checkMutation(mutation) && $('#game_container').text().indexOf('OmertaBeyond Preferences') == -1;
+
+            });
+            
+            if (notMulti && !onPage("Mail")){              
+                categorizeClick();                      
+            }
+            
+            if(onPage("information"))updateClickLimit();
         });
         observer.observe(document.getElementById('game_container'), {
             attributes: false,
@@ -108,10 +102,9 @@ if (document.getElementById('game_container') !== null) {
     }     
 }
 
-function categorizeClick(){
-
+function categorizeClick(){ 
     //Excluding buyouts
-    if($('#game_container').text().indexOf('You are in jail for the next') == -1 ){
+    if($('#game_container').text().indexOf('You bought yourself out for') == -1 ){
 
         //Checking whether click limit is already exceeded 
         if($('#game_container').text().indexOf('You reached your click limit. You may request') == -1) {
@@ -176,15 +169,16 @@ function categorizeClick(){
 function updateBar(){
 
     var perc = $('#clicklimit div[data-perc]').attr('data-perc');
-    var pClass = 'pbKS';
     var pWidth = (perc > 100?100:perc) + "%";
-
+    var secLeft =  $('#secLeft').attr('data-sec-left');
+    $('#secLeft').text(secLeft);
     $('#clicklimit div[data-perc]').find('div').animate({width: pWidth }, DELAY);
+    
 }
 
 
 function onPage(page){
-    return window.location.hash.indexOf(page) != -1
+    return window.location.hash.indexOf(page) != -1;
 }
 
 //returns true if mutation happened just once on a page.
@@ -192,4 +186,10 @@ function checkMutation(mutation){
     for (var i = 0; i<mutation.addedNodes.length; i++)
           if (mutation.addedNodes[i].id == "AF") return false;
     return true;  
+}
+
+//Updates click limit using the level info on information page
+function updateClickLimit(){
+    GM_setValue('click_limit',$('#game_container > table > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)').html().indexOf('Donating') == -1? 11 : 40);
+    CLICK_LIMIT = GM_getValue('click_limit',11);
 }
