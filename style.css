@@ -3,11 +3,15 @@
 	width: 100px;
 	margin-right: 15px;
 }
-#clickCounter {
-	display: inline;
-}
 #clickLimit {
 	display: inline;
+}
+#clickCounter {
+	position: absolute;
+	float: right;
+	right: 6px;
+	color: #fff;
+	z-index: 11;
 }
 #status div:nth-child(3) {
 	display: none !important;
