@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.2.6
+// @version         1.2.7
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -173,9 +173,19 @@ function updateBar(){
     
 }
 
+//Updates click limit using the level info on information page
+function updateClickLimit(){
+    GM_setValue('click_limit',$('#game_container > table > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)').html().indexOf('Donating') == -1? 11 : 40);
+    CLICK_LIMIT = GM_getValue('click_limit',11);
+    $('#clickLimit').text(CLICK_LIMIT);
+}
 
 function onPage(page){
     return window.location.hash.indexOf(page) != -1;
+}
+
+function pageContains(str){
+    return $('#game_container').text().indexOf(str) != -1;
 }
 
 //returns true if mutation happened just once on a page.
@@ -185,21 +195,17 @@ function checkMutation(mutation){
     return true;  
 }
 
-//Updates click limit using the level info on information page
-function updateClickLimit(){
-    GM_setValue('click_limit',$('#game_container > table > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)').html().indexOf('Donating') == -1? 11 : 40);
-    CLICK_LIMIT = GM_getValue('click_limit',11);
-    $('#clickLimit').text(CLICK_LIMIT);
-}
-
 //returns true if it is counted as click
 function doesItCount(){
-    if(!onPage("Mail")) 
-        if(!onPage("Statistics"))
-            if(!onPage("allusers"))
-                if($('#game_container').text().indexOf('OmertaBeyond Preferences') == -1) 
-                    if($('#game_container').text().indexOf('You bought yourself out for') == -1)
-                        return true;
 
-    return false;
+    var notPages = ["Mail","Statistics","allusers","sms"];
+    var notStates = ["OmertaBeyond Preferences","You bought yourself out for"];
+
+    for (page of notPages) 
+        if(onPage(page)) return false;
+
+    for (state of notStates) 
+        if(pageContains(state)) return false;
+  
+    return true;
 }
