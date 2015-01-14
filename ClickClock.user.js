@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.2
+// @version         1.2.1
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -38,7 +38,7 @@ var county = null; //Variable for interval
 GM_addStyle(GM_getResourceText('css'));
 
 //Adds bar to page
-$("#status").append(" <div id='clickCounter'>1</div><div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'></div></div></div>");
+$("#status").append("<div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><div id='clickCounter'>1</div><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'></div></div></div>");
 $('#clickLimit').text(CLICK_LIMIT);
 $("#clicklimit").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
 
