@@ -36,7 +36,7 @@ var county = null; //Variable for interval
 GM_addStyle(GM_getResourceText('css'));
 
 //Adds bar to page
-$("#status").append("<div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><p id='clickCounter'>1</p><div class='pbKS'></div></div></div>");
+$("#status").append("<div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><p id='clickCounter'>0</p><div class='pbKS'></div></div></div>");
 $('#clickLimit').text(CLICK_LIMIT);
 $("#clickClock").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
 
@@ -198,7 +198,7 @@ function checkMutation(mutation){
 //returns true if it is counted as click
 function doesItCount(){
 
-    var notPages = ["Mail","Statistics","allusers","sms"];
+    var notPages = ["Mail","Statistics","allusers","sms","module=SM"];
     var notStates = ["OmertaBeyond Preferences","You bought yourself out for"];
 
     for (page of notPages) 
