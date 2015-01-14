@@ -6,7 +6,7 @@
 // @author          Kalabunga
 // @author          Bazgrim
 // @homepage        https://github.com/Himish/ClickClock
-// @updateURL       https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
+// @downloadURL     https://github.com/Himish/ClickClock/raw/master/ClickClock.user.js
 // @supportURL      https://github.com/Himish/ClickClock/issues
 // @require         https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @resource  css   https://raw.githubusercontent.com/Himish/ClickClock/master/style.css
