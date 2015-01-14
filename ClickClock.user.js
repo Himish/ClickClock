@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.2.2
+// @version         1.2.3
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -40,7 +40,7 @@ GM_addStyle(GM_getResourceText('css'));
 //Adds bar to page
 $("#status").append("<div id='clickClock'><div class='progressbar-label'>Click Limit: <div id='clickLimit'></div></div><div class='progressbar' data-perc='100'><span class='percent' id='secLeft' data-sec-left='60'></span><div class='pbKS'><p id='clickCounter'>1</p></div></div></div>");
 $('#clickLimit').text(CLICK_LIMIT);
-$("#clickLimit").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
+$("#clickClock").hover(function(){ $("#secLeft").stop().fadeIn('slow'); }, function(){ $("#secLeft").fadeOut('slow'); });
 
 //Start click time counter
 function finalCountdown(){
@@ -60,7 +60,7 @@ function timeytimey(timeLeft){
     if(timeLeft <= 0){
 
         clearInterval(county);
-        $('#clicklimit div[data-perc]').attr('data-perc', 100);
+        $('#clickClock div[data-perc]').attr('data-perc', 100);
         $('#secLeft').attr('data-sec-left', 60);
         updateBar();
         GM_setValue("count",60);
@@ -68,7 +68,7 @@ function timeytimey(timeLeft){
         
     }
     else{
-        $('#clicklimit div[data-perc]').attr('data-perc',timeLeft/60*100);
+        $('#clickClock div[data-perc]').attr('data-perc',timeLeft/60*100);
         $('#secLeft').attr('data-sec-left', timeLeft);
         updateBar();
     }
@@ -168,11 +168,11 @@ function categorizeClick(){
 //Animating the bar
 function updateBar(){
 
-    var perc = $('#clicklimit div[data-perc]').attr('data-perc');
+    var perc = $('#clickClock div[data-perc]').attr('data-perc');
     var pWidth = (perc > 100?100:perc) + "%";
     var secLeft =  $('#secLeft').attr('data-sec-left');
     $('#secLeft').text(secLeft);
-    $('#clicklimit div[data-perc]').find('div').animate({width: pWidth }, DELAY);
+    $('#clickClock div[data-perc]').find('div').animate({width: pWidth }, DELAY);
     
 }
 
