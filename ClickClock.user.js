@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.1
+// @version         1.2
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
