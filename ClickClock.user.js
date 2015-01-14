@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            ClickClock
-// @version         1.2.4
+// @version         1.2.5
 // @description     Know your limits!
 // @author          Himish
 // @author          Kalabunga
@@ -24,8 +24,6 @@
 // @priority        1
 // ==/UserScript==
 
-
-GM_setValue('click_limit',GM_getValue('clicklimit',11));
 var CLICK_LIMIT = GM_getValue('click_limit',11);
 
 var DELAY = 1000; //Timer update delay
@@ -84,13 +82,14 @@ if (document.getElementById('game_container') !== null) {
             var notMulti = true;
 
             mutations.forEach(function(mutation) {                       
-                notMulti = checkMutation(mutation) && $('#game_container').text().indexOf('OmertaBeyond Preferences') == -1;
+                notMulti = checkMutation(mutation);
 
             });
             
-            if (notMulti && !onPage("Mail")){              
-                categorizeClick();                      
-            }
+            if (notMulti)
+                if(doesItCount())              
+                    categorizeClick();                      
+            
             
             if(onPage("information"))updateClickLimit();
         });
@@ -104,7 +103,6 @@ if (document.getElementById('game_container') !== null) {
 
 function categorizeClick(){ 
     //Excluding buyouts
-    if($('#game_container').text().indexOf('You bought yourself out for') == -1 ){
 
         //Checking whether click limit is already exceeded 
         if($('#game_container').text().indexOf('You reached your click limit. You may request') == -1) {
@@ -162,7 +160,6 @@ function categorizeClick(){
         else{
             GM_setValue("limited",true);
         }
-    }
 }
 
 //Animating the bar
@@ -193,4 +190,15 @@ function updateClickLimit(){
     GM_setValue('click_limit',$('#game_container > table > tbody > tr > td:nth-child(1) > table:nth-child(1) > tbody > tr:nth-child(6) > td:nth-child(2)').html().indexOf('Donating') == -1? 11 : 40);
     CLICK_LIMIT = GM_getValue('click_limit',11);
     $('#clickLimit').text(CLICK_LIMIT);
+}
+
+//returns true if it is counted as click
+function doesItCount(){
+    if(!onPage("Mail")) 
+        if(!onPage("Statistics")) 
+            if($('#game_container').text().indexOf('OmertaBeyond Preferences') == -1) 
+                if($('#game_container').text().indexOf('You bought yourself out for') == -1)
+                    return true;
+
+    return false;
 }
