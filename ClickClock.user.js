@@ -199,7 +199,7 @@ function checkMutation(mutation){
 function doesItCount(){
 
     var notPages = ["Mail","Statistics","allusers","sms","module=SM"];
-    var notStates = ["OmertaBeyond Preferences","You bought yourself out for"];
+    var notStates = ["OmertaBeyond Preferences","You bought yourself out for","You are not in jail"];
 
     for (page of notPages) 
         if(onPage(page)) return false;
